@@ -1,0 +1,258 @@
+OPENCODE TASK RUNNER – DIGITAL INVITATION WEB
+
+Purpose: This document contains small atomic development tasks designed
+for OpenCode execution. Each task should take approximately 15–30
+minutes and can be executed independently.
+
+Workflow: 1. Copy one TASK block 2. Paste into OpenCode 3. Execute 4.
+Test locally 5. Commit to git
+
+============================== TASK 1 — CREATE INVITATION MODULE
+==============================
+
+OPEN CODE PROMPT
+
+1.  Create directory /src/invitation
+
+2.  Create file /src/invitation/InvitationPage.tsx
+
+“use client”
+
+import { ReactNode } from “react”
+
+export default function InvitationPage({ children }: { children:
+ReactNode }) { return (
+      {children}
+    </div>
+
+) }
+
+End of instructions.
+
+============================== TASK 2 — CREATE INVITATION DATA HOOK
+==============================
+
+OPEN CODE PROMPT
+
+1.  Create file /src/invitation/useInvitationData.ts
+
+import { supabase } from “@/lib/supabase/client”
+
+export async function getWeddingConfig() { const { data, error } = await
+supabase .from(“wedding_config”) .select(“*“)
+
+if (error) { console.error(error) return [] }
+
+return data }
+
+End of instructions.
+
+============================== TASK 3 — CREATE SERVICE LAYER
+==============================
+
+OPEN CODE PROMPT
+
+1.  Create directory /src/lib/services
+
+2.  Create file /src/lib/services/guest-service.ts
+
+import { supabase } from “@/lib/supabase/client”
+
+export async function getGuests() { const { data } = await supabase
+.from(“guests”) .select(“*“)
+
+return data }
+
+3.  Create file /src/lib/services/config-service.ts
+
+import { supabase } from “@/lib/supabase/client”
+
+export async function getWeddingConfig() { const { data } = await
+supabase .from(“wedding_config”) .select(“*“)
+
+return data }
+
+End of instructions.
+
+============================== TASK 4 — CREATE SECTION ENGINE
+==============================
+
+OPEN CODE PROMPT
+
+1.  Create directory /src/builder
+
+2.  Create file /src/builder/section-engine.tsx
+
+import HeroSection from “@/sections/hero-section” import CoupleProfile
+from “@/sections/couple-profile” import LoveTimeline from
+“@/sections/love-timeline” import EventDetails from
+“@/sections/event-details” import PhotoGallery from
+“@/sections/photo-gallery” import RsvpForm from “@/sections/rsvp-form”
+import GiftSection from “@/sections/gift-section”
+
+export const sectionRegistry = { hero: HeroSection, couple:
+CoupleProfile, timeline: LoveTimeline, event: EventDetails, gallery:
+PhotoGallery, rsvp: RsvpForm, gift: GiftSection }
+
+export function renderSection(key: string, props: any) { const Component
+= sectionRegistry[key]
+
+if (!Component) return null
+
+return <Component {…props} /> }
+
+End of instructions.
+
+============================== TASK 5 — CREATE TEMPLATE SYSTEM
+==============================
+
+OPEN CODE PROMPT
+
+1.  Create directory /src/templates
+
+2.  Create file /src/templates/greenery-template.ts
+
+export const greeneryTemplate = { name: “greenery”, sections: [ “hero”,
+“couple”, “timeline”, “gallery”, “event”, “rsvp”, “gift” ] }
+
+3.  Create file /src/templates/rose-template.ts
+
+export const roseTemplate = { name: “rose”, sections: [ “hero”,
+“couple”, “gallery”, “timeline”, “event”, “rsvp” ] }
+
+4.  Create file /src/templates/template-registry.ts
+
+import { greeneryTemplate } from “./greenery-template” import {
+roseTemplate } from “./rose-template”
+
+export const templateRegistry = { greenery: greeneryTemplate, rose:
+roseTemplate }
+
+End of instructions.
+
+============================== TASK 6 — CREATE INVITATION ROUTE
+==============================
+
+OPEN CODE PROMPT
+
+1.  Create directory /src/app/invite/[slug]
+
+2.  Create file /src/app/invite/[slug]/page.tsx
+
+import { notFound } from “next/navigation” import InvitationPage from
+“@/invitation/InvitationPage”
+
+export default async function InvitePage({ params }: { params: { slug:
+string } }) {
+
+const slug = params.slug
+
+if (!slug) { notFound() }
+
+return (
+        Invitation for {slug}
+      </div>
+    </InvitationPage>
+
+) }
+
+End of instructions.
+
+============================== TASK 7 — ADD GUEST PERSONALIZATION
+==============================
+
+OPEN CODE PROMPT
+
+1.  Update file /src/app/invite/[slug]/page.tsx
+
+import { notFound } from “next/navigation” import InvitationPage from
+“@/invitation/InvitationPage”
+
+export default async function InvitePage({ params, searchParams }: {
+params: { slug: string } searchParams: { to?: string } }) {
+
+const slug = params.slug const guest = searchParams.to
+
+if (!slug) { notFound() }
+
+return (
+        {guest && (
+          <h2 className="text-xl">
+            Dear {guest.replace("-", " ")}
+          </h2>
+        )}
+
+        <h1 className="text-3xl font-bold">
+          Invitation for {slug}
+        </h1>
+
+      </div>
+    </InvitationPage>
+
+) }
+
+End of instructions.
+
+============================== TASK 8 — ADD QR CODE COMPONENT
+==============================
+
+OPEN CODE PROMPT
+
+1.  Install dependency npm install react-qr-code
+
+2.  Create directory /src/components/invitation
+
+3.  Create file /src/components/invitation/InvitationQR.tsx
+
+“use client”
+
+import QRCode from “react-qr-code”
+
+export default function InvitationQR({ url }: { url: string }) { return
+(
+      <QRCode value={url} size={180} />
+    </div>
+
+) }
+
+End of instructions.
+
+============================== TASK 9 — ADD WHATSAPP SHARE BUTTON
+==============================
+
+OPEN CODE PROMPT
+
+1.  Create file /src/components/invitation/WhatsappShare.tsx
+
+“use client”
+
+export default function WhatsappShare({ url }: { url: string }) {
+
+const message = encodeURIComponent(
+Hi, you are invited to our wedding.\n\nOpen invitation here:\n${url} )
+
+const link = https://wa.me/?text=${message}
+
+return ( Share via WhatsApp ) }
+
+End of instructions.
+
+============================== TASK 10 — ADD PREVIEW PAGE
+==============================
+
+OPEN CODE PROMPT
+
+1.  Create directory /src/app/preview
+
+2.  Create file /src/app/preview/page.tsx
+
+import InvitationPage from “@/invitation/InvitationPage”
+
+export default function PreviewPage() { return (
+        Invitation Preview
+      </div>
+    </InvitationPage>
+
+) }
+
+End of instructions.

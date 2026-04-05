@@ -1,0 +1,161 @@
+
+You are a Senior Software Engineer performing a FINAL PRE-PUBLISH AUDIT.
+
+Your goal is to ensure this project is production-ready, stable, and safe to release publicly.
+
+---
+
+📦 PROJECT CONTEXT
+
+- Framework: Next.js (App Router)
+- Language: TypeScript
+- Styling: Tailwind CSS
+- App Type: Digital Invitation Builder
+- Core Features:
+  - Create invitation
+  - Preview invitation
+  - Dynamic route (/invite/[slug])
+  - Gallery image management
+  - WhatsApp sharing (prefilled message)
+  - Theme system (Tailwind + CSS variables)
+
+---
+
+🎯 OBJECTIVE
+
+Audit the entire project and identify ALL issues that could:
+- Break functionality
+- Cause inconsistent data (e.g. stale UI vs DB)
+- Degrade UX
+- Affect performance
+- Block production deployment
+
+---
+
+🔍 AUDIT SCOPE (MANDATORY)
+
+### 1. Core Functionality
+- Validate end-to-end flow:
+  create → preview → share → open
+- Check dynamic routing `/invite/[slug]`
+- Detect any runtime crash risks
+
+---
+
+### 2. Data Integrity & State Management (CRITICAL)
+- Ensure frontend state matches database state
+- Detect:
+  - stale data
+  - fallback/mock data usage
+  - caching issues (Next.js)
+- Validate delete/update persistence after refresh
+
+---
+
+### 3. API & Backend Consistency
+- Verify all API routes:
+  - correct request handling
+  - proper error handling
+- Ensure DB operations:
+  - create / update / delete are correct
+- Detect incorrect query conditions or missing filters
+
+---
+
+### 4. Caching & Next.js Behavior (IMPORTANT)
+- Detect unintended caching:
+  - fetch without `no-store`
+  - static rendering where dynamic is needed
+- Ensure dynamic data always reflects latest DB state
+
+---
+
+### 5. WhatsApp Sharing (HIGH PRIORITY)
+- Validate message formatting
+- Check URL encoding correctness
+- Ensure links open properly on:
+  - mobile WhatsApp
+  - WhatsApp Web
+
+---
+
+### 6. UI/UX Quality
+- Detect:
+  - broken images (e.g. "Failed to load")
+  - missing loading states
+  - poor empty states
+- Ensure mobile responsiveness
+- Ensure consistent styling
+
+---
+
+### 7. Performance
+- Detect:
+  - unnecessary re-renders
+  - large/unoptimized images
+  - unused dependencies
+- Suggest practical optimizations (not overengineering)
+
+---
+
+### 8. Security & Validation
+- Ensure:
+  - no sensitive data exposed
+  - inputs are validated
+  - safe API usage
+
+---
+
+### 9. Deployment Readiness
+- Check:
+  - environment variable usage
+  - build compatibility (`npm run build`)
+- Ensure project is ready for deployment on platforms like:
+  - Vercel
+
+---
+
+📊 OUTPUT FORMAT (STRICT)
+
+For each finding:
+
+[PRIORITY]
+🔴 Critical (must fix before launch)
+🟡 Important (should fix)
+🟢 Nice-to-have
+
+[ISSUE]
+What is wrong
+
+[WHY IT MATTERS]
+Impact on production
+
+[FIX]
+Clear, practical solution
+
+[FIXED CODE]
+Provide corrected code snippet if applicable
+
+---
+
+🚨 IMPORTANT RULES
+
+- DO NOT give generic advice
+- DO NOT list hypothetical issues
+- ONLY report real issues found in code
+- Focus on actionable, production-relevant fixes
+- Avoid overengineering
+
+---
+
+🎯 FINAL GOAL
+
+After applying your fixes:
+- App runs without errors
+- Data is consistent (no ghost/stale state)
+- UX is clean and reliable
+- App is safe to publish
+
+---
+
+Now analyze the project files below: session-ses_2a1d.md
