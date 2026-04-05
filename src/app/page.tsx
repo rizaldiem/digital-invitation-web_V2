@@ -67,15 +67,7 @@ function extractYouTubeId(url: string): string | null {
 }
 
 export default function Home() {
-  const [isOpened, setIsOpened] = useState(false);
-  const [loading, setLoading] = useState(true);
-  const [fullPageVideo, setFullPageVideo] = useState(false);
-  const [audioState, setAudioState] = useState({
-    hasAudio: false,
-    isPlaying: false,
-    isMuted: false,
-    type: 'local' as 'local' | 'youtube',
-    url: ''
+   return <h1>App is working</h1>
   });
   
   // New state for service-based data
