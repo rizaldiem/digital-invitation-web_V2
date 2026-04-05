@@ -28,17 +28,29 @@ function extractFirstName(fullName: string | undefined): string {
 export default async function InvitePage({ params }: { params: { slug: string } }) {
   const slug = params.slug
 
+  console.log("[InvitePage] Rendering for slug:", slug)
+
   if (!slug) {
+    console.log("[InvitePage] No slug provided")
     notFound()
   }
 
   try {
+    console.log("[InvitePage] Fetching invitation data for:", slug)
     const [invitationData, animationEnabled] = await Promise.all([
       getInvitationDataForGuest(slug),
       getAnimationEnabled()
     ])
     
+    console.log("[InvitePage] Invitation data:", JSON.stringify({
+      hasGuest: !!invitationData.guest,
+      guestName: invitationData.guest?.name,
+      configKeys: Object.keys(invitationData.config || {}),
+      sectionOrder: invitationData.sectionOrder
+    }))
+
     if (!invitationData.guest) {
+      console.log("[InvitePage] Guest not found for slug:", slug)
       notFound()
     }
 

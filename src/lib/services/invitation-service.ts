@@ -66,6 +66,7 @@ export async function getInvitationData(slug?: string): Promise<InvitationData> 
 }
 
 export async function getInvitationDataForGuest(slug: string) {
+  console.log("[InvitationService] getInvitationDataForGuest called with slug:", slug)
   return getInvitationData(slug)
 }
 

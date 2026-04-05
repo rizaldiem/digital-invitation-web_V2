@@ -16,6 +16,7 @@ export async function getGuests(): Promise<Guest[]> {
 }
 
 export async function getGuestBySlug(slug: string): Promise<Guest | null> {
+  console.log("[GuestService] getGuestBySlug called with slug:", slug)
   const { data, error } = await supabase
     .from("guests")
     .select("*")
@@ -27,6 +28,7 @@ export async function getGuestBySlug(slug: string): Promise<Guest | null> {
     return null
   }
 
+  console.log("[GuestService] Guest found:", data?.name)
   return data
 }
 
