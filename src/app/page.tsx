@@ -67,8 +67,8 @@ function extractYouTubeId(url: string): string | null {
 }
 
 export default function Home() {
-   return <h1>App is working</h1>
-  });
+  return <h1>App is working</h1>;
+}
   
   // New state for service-based data
   const [invitationData, setInvitationData] = useState<{
