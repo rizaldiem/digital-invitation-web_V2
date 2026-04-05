@@ -25,8 +25,8 @@ function extractFirstName(fullName: string | undefined): string {
   return fullName.trim().split(' ')[0] || ''
 }
 
-export default async function InvitePage({ params }: { params: { slug: string } }) {
-  const slug = params.slug
+export default async function InvitePage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params
 
   console.log("[InvitePage] Rendering for slug:", slug)
 
