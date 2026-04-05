@@ -69,17 +69,6 @@ function extractYouTubeId(url: string): string | null {
 export default function Home() {
   const [isOpened, setIsOpened] = useState(false);
   const [loading, setLoading] = useState(true);
-  const [fullPageVideo, setFullPageVideo] = useState(false);
-  const [audioState, setAudioState] = useState({
-    hasAudio: false,
-    isPlaying: false,
-    isMuted: false,
-    type: 'local' as 'local' | 'youtube',
-    url: ''
-  });
-  
-  
-  // New state for service-based data
   const [invitationData, setInvitationData] = useState<{
     config: Record<string, string>;
     theme: {
@@ -95,6 +84,14 @@ export default function Home() {
   } | null>(null);
   const [sectionOrder, setSectionOrder] = useState<Array<{ key: string; displayOrder: number; enabled: boolean }>>([]);
   const [animationEnabled, setAnimationEnabled] = useState<boolean>(true);
+  const [fullPageVideo, setFullPageVideo] = useState(false);
+  const [audioState, setAudioState] = useState({
+    hasAudio: false,
+    isPlaying: false,
+    isMuted: false,
+    type: 'local' as 'local' | 'youtube',
+    url: ''
+  });
 
   const audioRef = useRef<HTMLAudioElement>(null);
   const { scrollYProgress } = useScroll();
